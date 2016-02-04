@@ -2,3 +2,8 @@
 [22.01.2016 13:32:10] DBManager: Fehler bei Statement "INSERT INTO user (firstname,name,streetname,streetnumber,postcode,city,birthday) VALUES (Vorname,Nachname,Straße,10,49112,Stadt,21.12.1994)"
 [22.01.2016 13:34:20] DBManager: query failed 'INSERT INTO user (firstname,name,streetname,streetnumber,postcode,city,birthday) VALUES (Vorname,Nachname,Straße,10,49112,Stadt,21.12.1994)' (0) 
 [22.01.2016 13:35:28] DBManager: query failed 'INSERT INTO user (firstname,name,streetname,streetnumber,postcode,city,birthday) VALUES (Vorname,Nachname,Straße,10,49112,Stadt,21.12.1994)' (1064) You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.1994)' at line 1
+[03.02.2016 10:34:54] DBManager: Fehler bei Statement "SELECT * FROM user WHERE id = "
+[03.02.2016 10:34:56] DBManager: Fehler bei Statement "SELECT * FROM user WHERE id = "
+[04.02.2016 09:04:55] DBManager: query failed 'UPDATE user SET ' (1064) You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+[04.02.2016 09:05:02] DBManager: query failed 'UPDATE user SET ' (1064) You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+[04.02.2016 09:05:04] DBManager: query failed 'UPDATE user SET ' (1064) You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1

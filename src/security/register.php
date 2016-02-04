@@ -1,6 +1,6 @@
 <?php
 //Koniguration laden
-require_once '../../config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] .'/vereinsverwaltung/src/conf/config.php';
 
 
 //Nur ausführen, wenn cli sonst Fehlermeldung

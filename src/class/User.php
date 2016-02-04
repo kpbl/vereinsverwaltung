@@ -1,7 +1,5 @@
 <?php
 
-//namespace Entities\User;
-
 class User {
     
     private $id;
@@ -17,6 +15,7 @@ class User {
     private $bic;
     private $sepa;
     private $working;
+    private $deleted;
     
     public function __construct() {
 
@@ -132,5 +131,13 @@ class User {
 
     public function setWorking($working){
             $this->working = $working;
+    }
+
+    public function getDeleted(){
+        return $this->deleted;
+    }
+
+    public function setDeleted($deleted){
+        $this->deleted = $deleted;
     }
 }

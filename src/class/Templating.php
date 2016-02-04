@@ -1,6 +1,5 @@
 <?php
-
-require_once dirname(__FILE__) .'/../../config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] .'/vereinsverwaltung/src/conf/config.php';
 
 class Templating
 {
@@ -24,6 +23,9 @@ class Templating
         $file = $this->tmpldir .$filename;
         if(file_exists($file)){
             $html = file_get_contents($file);
+
+            //Wenn Nachricht in Session, dann darstellen
+            $html = $this->insertMessage($html);
             $htmlParts = explode('%CONTENT%',$html);
             $partsLength = count($htmlParts);
             if($partsLength == 2){
@@ -57,6 +59,8 @@ class Templating
                 return false;
             }
 
+            //Wenn Nachricht in Session, dann darstellen
+            $html = $this->insertMessage($html);
             return $html;
         }
         else {
@@ -68,5 +72,26 @@ class Templating
 
     public function getInfo(){
         return 'Verzeichnis: ' .$this->tmpldir;
+    }
+
+    private function insertMessage($htmlCode)
+    {
+
+        $newHtml = $htmlCode;
+        $messageHtml = "";
+        if(isset($_SESSION['message']))
+        {
+            $messageHtml = '<div class="alert alert-' .$_SESSION['message']['type'] .' alert-dismissible" role="alert">
+                                <button class="close" aria-label="Close" data-dismiss="alert" type="button">
+                                    <span aria-hidden="true">×</span>
+                                </button>'
+                            . $_SESSION['message']['text']
+                            .'</div>';
+
+            unset($_SESSION['message']);
+        }
+
+        $newHtml = str_replace('%MESSAGE%',$messageHtml,$newHtml);
+        return $newHtml;
     }
 }

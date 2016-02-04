@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] .'/vereinsverwaltung/src/conf/config.php';
 
 if(isset($_SESSION['username']))
 {
@@ -18,6 +18,9 @@ if($_POST)
         {
             header("Location: " .LINK_HOME);
         }
+        else{
+            $_SESSION['message'] = ['text' => $error,'type' => 'danger'];
+        }
     }
 }
 
@@ -27,18 +30,6 @@ $wrappers = $tmpl->renderWrapper('layout.html');
 if($wrappers) {
     echo $wrappers[0];
     ?>
-
-    <div class="animated fadeIn col-md-offset-2 col-md-8 login">
-        <h2>Vereinsverwaltung</h2>
-        <br>
-        <?php
-        if (!empty($error)) {
-
-            echo '<div class="alert alert-danger" role="alert">'
-                . $error
-                . '</div><br>';
-        }
-        ?>
         <form action="" method="post">
             <!--<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />-->
 
@@ -56,12 +47,11 @@ if($wrappers) {
                        required="required"/>
             </div>
 
-            <div class="input-group pull-right">
+            <div class="form-group pull-right">
                 <br>
                 <input type="submit" class="btn btn-default" id="submit" name="submit" value="Login"/>
             </div>
         </form>
-    </div>
 
     <?php
     echo $wrappers[1];
@@ -86,7 +76,7 @@ function checkUserData($username,$password)
         $correctPw = password_verify($password,$row['password']);
 
         if(!$correctPw)
-            $error = "Falsches Passwort.";
+            $error = "Falsche Benutzerdaten.";
         else
         {
             $_SESSION['username'] = $row['username'];
@@ -94,7 +84,7 @@ function checkUserData($username,$password)
     }
     else
     {
-        $error = "Benutzername nicht gefunden.";
+        $error = "Falsche Benutzerdaten.";
     }
 
     return $error;

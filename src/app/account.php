@@ -1,19 +1,22 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] .'/vereinsverwaltung/src/conf/config.php';
+
 securityCheck();
+
+$dbmanager = new DBManager();
+$accounts = $dbmanager->getAll('Account',['name']);
 
 $tmpl = new Templating();
 $wrappers = $tmpl->renderWrapper('layoutMenu.html');
-if($wrappers){
+if($wrappers) {
     echo $wrappers[0];
-?>
+    ?>
 
-    <h1>Hallo <?php echo $_SESSION['username'] ?></h1>
+    <h1>Kontoübersicht</h1>
 
-<?php
+    <?php
     echo $wrappers[1];
 }
-else{
+else {
     echo $tmpl->render('error.html');
 }
-

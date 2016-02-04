@@ -113,6 +113,7 @@ CREATE TABLE `user` (
   `bic` varchar(11) DEFAULT NULL,
   `sepa` tinyint(1) NOT NULL DEFAULT '0',
   `working` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
