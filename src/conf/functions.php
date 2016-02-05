@@ -1,23 +1,22 @@
 <?php
 
-//Loading classes from path 'src/class/'
+//Lade Klassen von  'src/class/'
 function __autoload($classname)
 {
-
     if(file_exists(dirname(__FILE__) .'/../class/' .$classname .'.php'))
         include dirname(__FILE__) .'/../class/' .$classname .'.php';
 }
 
-//Check if logged in and redirect if false
+//Prüfen ob Benutzer angemeldet und redirect auf Login Seite, wenn nicht
 function securityCheck()
 {
-
     if(empty($_SESSION['username'])) {
         header('Location: ' .LINK_LOGIN);
         die();
     }
 }
 
+//Daten von Mitglieder Formular (create,edit) aus Post einlesen und Prüfen ob alles valide sonst Fehlermeldung
 function getDataFromPost(){
 
     $data = [];
