@@ -3,9 +3,9 @@
 session_start();
 
 //Database parameters
-define('DATABASE','vereinsverwaltung');
-define('DBUSER','verein');
-define('DBPASSWD','V3rwaltung!');
+define('DATABASE','DBNAME');
+define('DBUSER','DBUSER');
+define('DBPASSWD','DBPASSWORD');
 
 //Paths
 define('PATH_LOG',dirname(__FILE__) .'/../../logs/');
