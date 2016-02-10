@@ -8,7 +8,7 @@ if(isset($_SESSION['username']))
     header('Location: ' .LINK_HOME);
 }
 
-//Prüfen ob Formular abgescihckt wurde
+//Prüfen ob Formular abgeschickt wurde
 if($_POST)
 {
 

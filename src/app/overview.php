@@ -1,8 +1,10 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] .'/vereinsverwaltung/src/conf/config.php';
 
+//Prüfen ob Benutzer angemeldet
 securityCheck();
 
+//Alle Benutzer laden
 $dbmanager = new DBManager();
 $users = $dbmanager->getAll('User',['name']);
 

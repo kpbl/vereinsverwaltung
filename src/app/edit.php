@@ -1,11 +1,15 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] .'/vereinsverwaltung/src/conf/config.php';
+//Prüfen ob Benutzer angemeldet, sonst redirect zu login Seite
 securityCheck();
 
+//Wenn get parameter 'user' gesetzt Eintrag mit dieser id anzeigen
 if(isset($_GET['user'])) {
+    //Verbinden mit DB und Eintrag in Userobject laden
     $dbmanager = new DBManager();
     $user = $dbmanager->get('User', $_GET['user']);
 
+    //Wenn get parameter 'delete' gesetzt Eintrag löschen
     if(isset($_GET['delete']))
     {
         if($dbmanager->delete('User',$user->getId())){
@@ -27,12 +31,15 @@ else {
     die();
 }
 
+//Prüfen ob Formular abgeschickt wurde
 if($_POST)
 {
+    //Daten von Formular in Array speichern und prüfen
     $userData = getDataFromPost();
     if(!isset($userData['error']))
     {
 
+        //Benutzer von Datenbank laden und eingegebenen Daten speichern
         $dbmanager = new DBManager();
         if($dbmanager->isConnected()){
             $user = $dbmanager->get('User', $_GET['user']);

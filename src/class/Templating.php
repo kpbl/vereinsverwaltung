@@ -18,6 +18,7 @@ class Templating
         $this->logger = new Logger();
     }
 
+    //Template Datei einlesen und bei '%CONTENT%' trennen, um zwei strings zurückzugeben
     public function renderWrapper($filename){
 
         $file = $this->tmpldir .$filename;
@@ -50,6 +51,7 @@ class Templating
         }
     }
 
+    //Template Datei einlesen und als String zurückgeben
     public function render($filename){
         $file = $this->tmpldir .$filename;
         if(file_exists($file)){
@@ -70,10 +72,12 @@ class Templating
         }
     }
 
+    //Template Verzeichnis anzeigen
     public function getInfo(){
         return 'Verzeichnis: ' .$this->tmpldir;
     }
 
+    //Wenn '%MESSAGE%' in Template, dann mit Nachricht in Session ersetzen
     private function insertMessage($htmlCode)
     {
 

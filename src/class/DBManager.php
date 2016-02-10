@@ -30,18 +30,22 @@ class DBManager
         }
     }
 
+    //Verbindung prüfen
     public function isConnected(){
         return $this->connected;
     }
 
+    //Alle Eintrage einer Klasse aus der Datenbank laden
     public function getAll($classname,$order = null, $orderType = 'ASC'){
 
         $entities = [];
         $sql = 'SELECT * FROM ' .strtolower($classname);
 
+        //Wenn Klasse deleted Flag hat, auf deleted=0 prüfen (nicht gelöschte Objekte)
         if(property_exists($classname,'deleted'))
             $sql .= ' WHERE deleted=0';
 
+        //Wenn Eigenschaften zum Sortieren angegeben, order by an string anfügen
         if($order != null){
             $sql .= ' ORDER BY ';
             foreach($order as $ord){
@@ -50,11 +54,14 @@ class DBManager
             $sql .= $orderType;
         }
 
+        //SQL in Log Datei speichern, wenn debug
         if(DEBUG)
             $this->logger->writeDebug("DBManager: getAll '" .$sql ."'");
 
+        //SQL ausführen
         $sqlRes = $this->mysqli->query($sql);
         if($sqlRes) {
+            //Wenn query erfolgreich Objekte in array speichern (assoziativ)
             while ($row = $sqlRes->fetch_assoc()) {
 
                 $entity = new $classname();
@@ -63,21 +70,27 @@ class DBManager
             }
         }
         else{
+            //Bei Fehler false zurückgeben und Fehlermeldung in error log
             $this->logger->writeError('DBManager: Fehler bei Statement "' .$sql .'"');
             return false;
         }
 
+        //gefundene Objekte zurückgeben, wenn keine EInträge vorhanden dann leer
         return $entities;
     }
 
+    //Bestimmten eintrag einer KLasse aus DB laden
     public function get($classname,$id){
 
+        //Select statement
         $sql = 'SELECT * FROM ' .strtolower($classname) .' WHERE id = ' .$id;
         $sqlRes = $this->mysqli->query($sql);
 
+        //Schreib Statement in Debug Log
         if(DEBUG)
             $this->logger->writeDebug("DBManager: get '" .$sql ."'");
 
+        //Wenn statement erfolgreich, in Objekt speichern
         if($sqlRes) {
             $entity = new $classname();
             while ($row = $sqlRes->fetch_assoc()) {
@@ -86,11 +99,13 @@ class DBManager
             return $entity;
         }
         else{
+            //Bei Fehler return false und in error log schreiben
             $this->logger->writeError('DBManager: Fehler bei Statement "' .$sql .'"');
             return false;
         }
     }
 
+    //Neues Objekt in Datenbank speichern
     public function persist($classname,$data){
 
         foreach($data as $dataEntity) {
@@ -217,6 +232,7 @@ class DBManager
         return true;
     }
 
+    //Eigenschaft je nach typ anpassen für sql statement
     private function convertProperty($value){
 
         switch(gettype($value)){

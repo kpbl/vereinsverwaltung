@@ -1,18 +1,23 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] .'/vereinsverwaltung/src/conf/config.php';
 
+//Prüfen ob Benutzer angemeldet, sonst redirect zu login Seite
 securityCheck();
 
+//Prüfen ob Formular abgeschickt wurde
 if($_POST)
 {
+    //Formulardaten in Arrayspeichern und prüfen ob Valide -> sonst error Nachricht
     $userData = getDataFromPost();
     if(!isset($userData['error']))
     {
-
+        //Verbindung mit Datenbank aufbauen
         $dbmanager = new DBManager();
         if($dbmanager->isConnected()){
+            //Neues Objekt der Klasse user mit übergebenen Daten in datenbank speichern
             if($dbmanager->persist('User',[$userData])){
                 $_SESSION['message'] = ['type' => 'success', 'text' => 'Das Mitglied wurde im System gespeichert'];
+                //$_Post löschen -> leeres FOrmular mit Erfolsmeldung
                 unset($_POST);
             }
             else{
@@ -27,9 +32,11 @@ if($_POST)
         $_SESSION['message'] = ['text' => $userData['error'],'type' => 'danger'];
     }
 }
-
+//Klassen zum rendern von HTML-Templates (Layout Menü)
 $tmpl = new Templating();
 $wrappers = $tmpl->renderWrapper('layoutMenu.html');
+
+//Wenn Rendern erfolgreich Header und Footer um Content ausgeben
 if($wrappers) {
     echo $wrappers[0];
     ?>
@@ -100,6 +107,7 @@ if($wrappers) {
     echo $wrappers[1];
 }
 else{
+    //Fehlerseite Rendern bei error
     echo $tmpl->render('error.html');
 }
 
