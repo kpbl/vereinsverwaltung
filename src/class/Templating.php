@@ -26,7 +26,7 @@ class Templating
             $html = file_get_contents($file);
 
             //Wenn Nachricht in Session, dann darstellen
-            $html = $this->insertMessage($html);
+            $html = $this->insertParameters($html);
             $htmlParts = explode('%CONTENT%',$html);
             $partsLength = count($htmlParts);
             if($partsLength == 2){
@@ -62,7 +62,7 @@ class Templating
             }
 
             //Wenn Nachricht in Session, dann darstellen
-            $html = $this->insertMessage($html);
+            $html = $this->insertParameters($html);
             return $html;
         }
         else {
@@ -77,12 +77,13 @@ class Templating
         return 'Verzeichnis: ' .$this->tmpldir;
     }
 
-    //Wenn '%MESSAGE%' in Template, dann mit Nachricht in Session ersetzen
-    private function insertMessage($htmlCode)
+    //Wenn Parameter in Template erstzen
+    private function insertParameters($htmlCode)
     {
 
         $newHtml = $htmlCode;
         $messageHtml = "";
+        //Parameter %MESSAGE% mit html alert wenn SESSION['message'] gesetzt
         if(isset($_SESSION['message']))
         {
             $messageHtml = '<div class="alert alert-' .$_SESSION['message']['type'] .' alert-dismissible" role="alert">
@@ -96,6 +97,13 @@ class Templating
         }
 
         $newHtml = str_replace('%MESSAGE%',$messageHtml,$newHtml);
+
+        //Parameter %USERNAME% mit angemeldetem Benutzer ersetzen
+        if(isset($_SESSION['username']))
+        {
+            $newHtml = str_replace('%USERNAME%',$_SESSION['username'],$newHtml);
+        }
+        
         return $newHtml;
     }
 }

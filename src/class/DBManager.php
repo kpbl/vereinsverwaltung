@@ -105,6 +105,33 @@ class DBManager
         }
     }
 
+    //Informationen über Einträge ausgeben
+    public function getInfos()
+    {
+        
+        $infos = [];
+        
+        //Select statements
+        $statements = [];
+        $statements[] = 'SELECT COUNT(id) as total FROM user WHERE deleted=0';
+        $statements[] = 'SELECT COUNT(id) as working FROM user WHERE deleted=0 AND working=1';
+        $statements[] = 'SELECT COUNT(id) as sepa FROM user WHERE deleted=0 AND sepa=1';
+        $statements[] = "SELECT COUNT(id) as adult FROM user WHERE deleted=0 AND birthday<='" .date('Y-m-d', strtotime('-18 years')) ."'";
+        
+        foreach ($statements as $sql){
+            //Schreib Statement in Debug Log
+            if(DEBUG)
+                $this->logger->writeDebug("DBManager: get '" .$sql ."'");
+            
+            $sqlRes = $this->mysqli->query($sql);
+            foreach ($sqlRes->fetch_assoc() as $key => $col){
+                $infos[$key] = $col;
+            }
+        }        
+
+        return $infos;
+    }
+    
     //Neues Objekt in Datenbank speichern
     public function persist($classname,$data){
 
