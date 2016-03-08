@@ -34,12 +34,30 @@ if($wrappers){
             </div>
             <div class="col-md-6">
                 <h3><u>Kontoübersicht:</u></h3>
+                <?php
+                foreach($infos['accounts'] as $accInf){
+                ?>
                 <dl class="dl-horizontal">
                     <dt>Konto: </dt>
-                    <dd>Name</dd>
+                    <dd><?php echo $accInf['name']?></dd>
                     <dt>Saldo: </dt>
-                    <dd>Zahl</dd>
+                    <dd><?php echo $accInf['saldo']?></dd>
+                    <dt><u>Zugänge</u></dt>
+                    <dd></dd>
+                    <dt>offene Buchungen: </dt>
+                    <dd><?php echo $accInf['topaypos']?></dd>
+                    <dt>Summe: </dt>
+                    <dd><?php echo $accInf['topayposmoney']?>€</dd>
+                    <dt><u>Abgänge</u></dt>
+                    <dd></dd>
+                    <dt>offene Buchungen: </dt>
+                    <dd><?php echo $accInf['topayneg']?></dd>
+                    <dt>Summe: </dt>
+                    <dd><?php echo $accInf['topaynegmoney']?>€</dd>
                 </dl>
+                <?php                    
+                }
+                ?>
             </div>
         </div>
       </p>

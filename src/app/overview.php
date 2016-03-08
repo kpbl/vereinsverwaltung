@@ -28,6 +28,7 @@ if($wrappers){
                     <th>Straße</th>
                     <th>Postleitzahl</th>
                     <th>Stadt</th>
+                    <th>Geburtstag</th>
                     <th>Sepa</th>
                     <th>Arbeitstätig</th>
                     <th><span class="glyphicon glyphicon-wrench"></span></th>
@@ -44,6 +45,7 @@ if($wrappers){
             .'<td>' .$user->getStreetname() .' ' .$user->getStreetnumber() .$user->getStreetad() .'</td>'
             .'<td>' .$user->getPostcode() .'</td>'
             .'<td>' .$user->getCity() .'</td>'
+            .'<td>' .date_create($user->getBirthday())->format('d.m.Y') .'</td>'
             .'<td>';
         if($user->getSepa())
             echo 'Ja';

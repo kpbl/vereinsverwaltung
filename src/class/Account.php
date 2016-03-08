@@ -9,7 +9,6 @@ class Account {
     private $saldo;
 
     public function __construct() {
-
     }
 
     public function fetchData($data){
@@ -52,11 +51,11 @@ class Account {
             $this->bic = $bic;
     }
 
-    public function getSepa(){
+    public function getSaldo(){
             return $this->saldo;
     }
 
-    public function setSepa($saldo){
+    public function setSaldo($saldo){
             $this->saldo = $saldo;
     }
 }

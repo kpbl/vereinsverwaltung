@@ -17,8 +17,8 @@ if($_POST)
             //Neues Objekt der Klasse user mit übergebenen Daten in datenbank speichern
             if($dbmanager->persist('User',[$userData])){
                 $_SESSION['message'] = ['type' => 'success', 'text' => 'Das Mitglied wurde im System gespeichert'];
-                //$_Post löschen -> leeres FOrmular mit Erfolsmeldung
-                unset($_POST);
+                //Redirect overview -> Übersicht mit Erfolsmeldung
+                header('location: ' .LINK_OVERVIEW);                
             }
             else{
                 $_SESSION['message'] = ['type' => 'danger', 'text' => 'Die Daten konnten nicht gespeichert werde'];
@@ -75,7 +75,7 @@ if($wrappers) {
         </div>
         <div class="form-group col-md-12">
             <label for="inpBirthday">Geburtstag (dd.mm.yyyy)*</label>
-            <input type="text" class="form-control" id="inpBirthday" name="birthday"
+            <input type="text" class="form-control datepicker" id="inpBirthday" name="birthday"
                    <?php if (isset($_POST['birthday'])) echo 'value="' . $_POST['birthday'] . '" '; ?>required>
         </div>
         <div class="form-group col-md-12">
